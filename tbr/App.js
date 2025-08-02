@@ -1,35 +1,59 @@
-import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Alert, Text, View } from "react-native";
-import Book from "./components/Book";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import TBR from "./screens/TBR";
+import Library from "./screens/Library";
+
 export default function App() {
+  const [currentScreen, setCurrentScreen] = useState("TBR");
+
+  let ScreenComponent;
+  if (currentScreen === "TBR") {
+    ScreenComponent = <TBR />;
+  } else if (currentScreen === "Library") {
+    ScreenComponent = <Library />;
+  }
+
   return (
     <View style={styles.container}>
-      {/* title section */}
-      <View style-={styles.tbrWrapper}>
-        <Text style={styles.sectionTitle}>TBR</Text>
+      <View style={styles.content}>{ScreenComponent}</View>
 
-        <View style={styles.item}>
-          {/*this is where book covers will appear */}
-          <Book text={"task1"} />
-          <Book text={"task2"} />
-          <Book text={"task3"}/>
-        </View>
+      <View style={styles.navBar}>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => setCurrentScreen("TBR")}
+        >
+          <Text style={styles.navText}>📚 TBR</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => setCurrentScreen("Library")}
+        >
+          <Text style={styles.navText}>📖 Library</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FCB9B2",
-    paddingTop: 80,
-    paddingHorizontal: 20,
   },
-  tbrWrapper: {},
-  sectionTitle: {
+  content: {
+    flex: 1,
+  },
+  navBar: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingVertical: 15,
+    backgroundColor: "#eee",
+    borderTopWidth: 1,
+    borderColor: "#ccc",
+  },
+  navButton: {
+    padding: 10,
+  },
+  navText: {
     fontSize: 24,
-    fontWeight: "bold",
   },
-  item: {},
 });
