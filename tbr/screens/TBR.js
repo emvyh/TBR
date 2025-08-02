@@ -20,10 +20,6 @@ export default function TBR({ navigation }) {
           <Book text={"task3"} />
         </View>
         {/* bookRow section */}
-        <Button
-          title="Go to Library"
-          onPress={() => navigation.navigate("Library")}
-        />
       </View>
     </View>
   );
@@ -32,18 +28,18 @@ export default function TBR({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#9F86C0",
+    backgroundColor: "#ffc2e8",
     paddingHorizontal: 20,
   },
   tbrWrapper: {},
   sectionHeading: {
-    color: "#231942",
-    fontSize: 24,
+    color: "black",
+    fontSize: 25,
     fontWeight: "bold",
   },
   sectionTitle: {
-    color: "#231942",
-    fontSize: 36,
+    color: "black",
+    fontSize: 54,
     fontWeight: "bold",
     paddingTop: 80,
   },

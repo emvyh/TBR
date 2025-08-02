@@ -28,18 +28,18 @@ export default function Library({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FCB9B2",
+    backgroundColor: "#ffc2e8",
     paddingHorizontal: 20,
   },
   tbrWrapper: {},
   sectionHeading: {
-    color: "#461220",
-    fontSize: 24,
+    color: "black",
+    fontSize: 25,
     fontWeight: "bold",
   },
   sectionTitle: {
-    color: "#461220",
-    fontSize: 36,
+    color: "black",
+    fontSize: 54,
     fontWeight: "bold",
     paddingTop: 80,
   },

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import TBR from "./screens/TBR";
 import Library from "./screens/Library";
+import AddBook from "./screens/AddBook";
+import BySearch from "./screens/BySearch";
+import ByBarcode from "./screens/ByBarcode";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("TBR");
@@ -11,6 +14,12 @@ export default function App() {
     ScreenComponent = <TBR />;
   } else if (currentScreen === "Library") {
     ScreenComponent = <Library />;
+  } else if (currentScreen === "AddBook") {
+    ScreenComponent = <AddBook navigation={{ navigate: setCurrentScreen }} />;
+  } else if (currentScreen === "ByBarcode") {
+    ScreenComponent = <ByBarcode navigation={{ navigate: setCurrentScreen }} />;
+  } else if (currentScreen === "BySearch") {
+    ScreenComponent = <BySearch navigation={{ navigate: setCurrentScreen }} />;
   }
 
   return (
@@ -30,6 +39,13 @@ export default function App() {
           onPress={() => setCurrentScreen("Library")}
         >
           <Text style={styles.navText}>📖 Library</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => setCurrentScreen("AddBook")}
+        >
+          <Text style={styles.navText}>🧾 Add</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -55,5 +71,6 @@ const styles = StyleSheet.create({
   },
   navText: {
     fontSize: 24,
+    fontWeight: "bold",
   },
 });
