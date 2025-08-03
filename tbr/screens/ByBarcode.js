@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
-import { Camera } from "expo-camera";
+import { CameraView, Camera } from "expo-camera";
 
 export default function ByBarcode({ navigation }) {
   const [perms, setPerms] = useState(null);
@@ -49,8 +49,7 @@ export default function ByBarcode({ navigation }) {
     <View style={styles.container}>
       <View style={styles.heading}>
         <View style={styles.textWrapper}>
-          <Text style={styles.sectionTitle}>Search</Text>
-          <Text style={styles.temp}>Coming soon...</Text>
+          <Text style={styles.sectionTitle}>Scan Barcode</Text>
         </View>
         <TouchableOpacity
           style={styles.customButton}
@@ -59,9 +58,33 @@ export default function ByBarcode({ navigation }) {
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
       </View>
+
+      <View style={styles.cameraContainer}>
+        <CameraView
+          style={styles.camera}
+          onBarcodeScanned={handleBarcodeScan}
+          barcodeScannerSettings={{
+            barcodeTypes: ["ean13", "ean8", "code128"],
+          }}
+        />
+
+        {scanned && (
+          <View style={styles.scannedOverlay}>
+            <Text style={styles.scannedText}>Barcode Scanned!</Text>
+          </View>
+        )}
+
+        <View style={styles.scannerOverlay}>
+          <View style={styles.scannerFrame} />
+          <Text style={styles.instructionText}>
+            Point camera at book barcode
+          </Text>
+        </View>
+      </View>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -97,7 +120,68 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingRight: 20,
   },
-  temp: {
+  permissionContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  permissionText: {
+    fontSize: 18,
+    textAlign: "center",
+    marginBottom: 20,
+    color: "black",
+  },
+  cameraContainer: {
+    flex: 1,
+    margin: 20,
+    borderRadius: 15,
+    overflow: "hidden",
+  },
+  camera: {
+    flex: 1,
+  },
+  scannerOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  scannerFrame: {
+    width: 250,
+    height: 150,
+    borderWidth: 3,
+    borderColor: "#ff66c4",
+    backgroundColor: "transparent",
+    borderRadius: 10,
+  },
+  instructionText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 20,
+    textAlign: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  scannedOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(255, 102, 196, 0.8)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  scannedText: {
+    color: "white",
     fontSize: 24,
+    fontWeight: "bold",
   },
 });
