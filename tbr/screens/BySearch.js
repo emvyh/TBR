@@ -6,13 +6,19 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
+import { getbookData } from "../utils/bookFinder";
 
 export default function BySearch({ navigation }) {
   const [text, setText] = React.useState("");
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (text.trim()) {
       console.log("Searching for:", text);
+      try {
+        const data = await getbookData(text);
+      } catch (error) {
+        console.error("search failed: ", error);
+      }
     }
   };
   return (
