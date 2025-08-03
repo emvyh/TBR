@@ -28,6 +28,32 @@ export default function BookScreen({ navigation }) {
           <Text style={styles.bookAuthor}> Author</Text>
         </View>
       </View>
+      <View style={styles.bookDetail}>
+        <Text style={styles.bookHeading}>Pages: </Text>
+        <Text style={styles.bookHeading}>ISBN: </Text>
+      </View>
+      <View style={styles.select}>
+        <TouchableOpacity style={styles.selector} onPress={() => null}>
+          <Text style={styles.buttonText}>add TBR</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.selector} onPress={() => null}>
+          <Text style={styles.buttonText}>add library</Text>
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.bookHeading}>Owned?</Text>
+      <View style={styles.select}>
+        <TouchableOpacity style={styles.selector} onPress={() => null}>
+          <Text style={styles.buttonText}>Yes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.selector} onPress={() => null}>
+          <Text style={styles.buttonText}>No</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.last}>
+        <TouchableOpacity style={styles.add} onPress={() => null}>
+          <Text style={styles.buttonText}>Add Book</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -71,5 +97,50 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
     paddingTop: 20,
     gap: 10,
+  },
+  bookTitle: {
+    fontSize: 28,
+    fontWeight: "bold",
+  },
+  bookDetail: {
+    paddingTop: 20,
+    gap: 20,
+  },
+  bookHeading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    paddingHorizontal: 28,
+  },
+  select: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 20,
+    paddingHorizontal: 28,
+  },
+  selector: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ff66c4",
+    paddingVertical: 14,
+    borderRadius: 50,
+    minWidth: 180,
+    height: 48,
+  },
+  last: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 40,
+  },
+  add: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ff66c4",
+    paddingVertical: 14,
+    borderRadius: 50,
+    minWidth: 150,
+    height: 48,
   },
 });
