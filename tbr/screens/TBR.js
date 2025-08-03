@@ -9,10 +9,6 @@ export default function TBR({ navigation }) {
       <View style={styles.tbrWrapper}>
         <Text style={styles.sectionTitle}>TBR</Text>
         <Text style={styles.sectionHeading}>To Be Read</Text>
-        <Button
-          title="Add a Book"
-          onPress={() => Alert.alert("Button Pressed")}
-        />
         <View style={styles.bookRow}>
           {/*this is where book covers will appear */}
           <Book text={"task1"} />
