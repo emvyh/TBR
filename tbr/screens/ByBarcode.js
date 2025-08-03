@@ -38,7 +38,8 @@ export default function ByBarcode({ navigation }) {
       <View style={styles.container}>
         <View style={styles.permissionContainer}>
           <Text style={styles.permissionText}>
-            We need your permission to show the camera
+            We need your permission to show the camera,
+            if button doesn't work go to settings. 
           </Text>
           <Button onPress={requestPermission} title="Grant permission" />
         </View>

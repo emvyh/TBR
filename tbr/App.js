@@ -5,6 +5,7 @@ import Library from "./screens/Library";
 import AddBook from "./screens/AddBook";
 import BySearch from "./screens/BySearch";
 import ByBarcode from "./screens/ByBarcode";
+import BookScreen from "./screens/BookScreen";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("TBR");
@@ -20,6 +21,10 @@ export default function App() {
     ScreenComponent = <ByBarcode navigation={{ navigate: setCurrentScreen }} />;
   } else if (currentScreen === "BySearch") {
     ScreenComponent = <BySearch navigation={{ navigate: setCurrentScreen }} />;
+  } else if (currentScreen === "BookScreen") {
+    ScreenComponent = (
+      <BookScreen navigation={{ navigate: setCurrentScreen }} />
+    );
   }
 
   return (

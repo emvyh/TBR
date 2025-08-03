@@ -21,6 +21,12 @@ export default function AddBook({ navigation }) {
         >
           <Text style={styles.buttonText}>Add By Search</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.customButton}
+          onPress={() => navigation.navigate("BookScreen")}
+        >
+          <Text style={styles.buttonText}>TEMP</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
