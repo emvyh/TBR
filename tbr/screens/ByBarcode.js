@@ -1,7 +1,50 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { Camera } from "expo-camera";
 
 export default function ByBarcode({ navigation }) {
+  const [perms, setPerms] = useState(null);
+  const [scanned, setScanned] = useState(false);
+
+  useEffect(() => {
+    const getCameraPermissions = async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setPerms(status === "granted");
+    };
+
+    getCameraPermissions();
+  }, []);
+
+  //handles the scanning and also times out if too long
+  const handleBarcodeScan = ({ type, data }) => {
+    setScanned(true);
+    // this is where we search api
+    console.log("Scanned barcode: ", data);
+
+    setTimeout(() => setScanned(false), 2000);
+  };
+
+  const requestPermission = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    setPerms(status === "granted");
+  };
+
+  if (perms === null) {
+    return <View />;
+  }
+
+  if (perms === false) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.permissionContainer}>
+          <Text style={styles.permissionText}>
+            We need your permission to show the camera
+          </Text>
+          <Button onPress={requestPermission} title="Grant permission" />
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.heading}>
