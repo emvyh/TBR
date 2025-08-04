@@ -5,19 +5,22 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Image,
 } from "react-native";
 import { getbookData } from "../utils/bookFinder";
-
+import BookSearch from "../components/BookSearch";
 export default function BySearch({ navigation }) {
   const [text, setText] = React.useState("");
 
   const handleSearch = async () => {
     if (text.trim()) {
-      console.log("Searching for:", text);
       try {
-        const data = await getbookData(text);
+        const books = await getbookData(text);
+        console.log("First book title:", books[0]?.title);
+        console.log("First book author:", books[0]?.author[0]);
+        console.log("All books:", books);
       } catch (error) {
-        console.error("search failed: ", error);
+        console.error("Search failed:", error);
       }
     }
   };
@@ -45,6 +48,9 @@ export default function BySearch({ navigation }) {
           onSubmitEditing={handleSearch}
           returnKeyType="search"
         />
+      </View>
+      <View style={styles.book}>
+        <BookSearch />
       </View>
     </View>
   );
@@ -96,5 +102,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#ff99d6",
     maxWidth: 400,
+  },
+  book: {
+    paddingTop: 20,
   },
 });
