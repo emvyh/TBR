@@ -21,7 +21,7 @@ function getYear(publishedDate) {
 
 export async function getbookData(search) {
   //url for api calls
-  const url = `https://www.googleapis.com/books/v1/volumes?q=${search}`;
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${search}+bestseller&printType=books&maxResults=20`;
 
   try {
     const response = await axios.get(url);

@@ -6,19 +6,20 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  ScrollView,
 } from "react-native";
 import { getbookData } from "../utils/bookFinder";
 import BookSearch from "../components/BookSearch";
+
 export default function BySearch({ navigation }) {
   const [text, setText] = React.useState("");
+  const [books, setBooks] = React.useState([]);
 
   const handleSearch = async () => {
     if (text.trim()) {
       try {
-        const books = await getbookData(text);
-        console.log("First book title:", books[0]?.title);
-        console.log("First book author:", books[0]?.author[0]);
-        console.log("All books:", books);
+        const searchRes = await getbookData(text);
+        setBooks(searchRes);
       } catch (error) {
         console.error("Search failed:", error);
       }
@@ -52,6 +53,30 @@ export default function BySearch({ navigation }) {
       <View style={styles.book}>
         <BookSearch />
       </View>
+      {books.length > 0 && (
+        <ScrollView style={styles.resultWrapper}>
+          <Text style={styles.resultHeading}>Found {books.length} books:</Text>
+          {books.map((book, index) => (
+            <BookSearch
+              key={index}
+              book={book}
+              navigation={navigation}
+              onPress={() => {
+                console.log("Book object being passed:", book);
+                console.log("Book keys:", Object.keys(book));
+                navigation.navigate("BookScreen", { book });
+              }}
+            />
+          ))}
+        </ScrollView>
+      )}
+      {books.length === 0 && text.trim() !== "" && (
+        <View style={styles.noResults}>
+          <Text style={styles.noResultsText}>
+            No books found. Try a different search term.
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

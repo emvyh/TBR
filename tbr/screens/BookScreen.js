@@ -1,9 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native";
 
-export default function BookScreen({ navigation }) {
+export default function BookScreen({ route, navigation }) {
+  console.log("Route params:", route?.params);
+  console.log("Book data:", route?.params?.book);
+  const { book } = route.params;
+
+  if (!book) {
+    return (
+      <View style={styles.container}>
+        <Text>No book data received</Text>
+      </View>
+    );
+  }
+  console.log("All book properties:", Object.keys(book));
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.heading}>
         <View style={styles.textWrapper}>
           <Text style={styles.sectionTitle}>Book Details</Text>
@@ -20,24 +40,30 @@ export default function BookScreen({ navigation }) {
           source={{
             width: 150,
             height: 200,
-            uri: "https://picsum.photos/seed/picsum/200/300",
+            uri: book.pic || "https://via.placeholder.com/75x125?text=No+Image",
           }}
         />
         <View style={styles.bookInfo}>
-          <Text style={styles.bookTitle}> Book Title</Text>
-          <Text style={styles.bookAuthor}> Author</Text>
+          <Text style={styles.bookTitle}>{book.title}</Text>
+          <Text style={styles.bookAuthor}>
+            {" "}
+            By:{" "}
+            {Array.isArray(book.author) ? book.author.join(", ") : book.author}
+          </Text>
+          <Text style={styles.bookAuthor}> Year: {book.year}</Text>
         </View>
       </View>
       <View style={styles.bookDetail}>
-        <Text style={styles.bookHeading}>Pages: </Text>
-        <Text style={styles.bookHeading}>ISBN: </Text>
+        <Text style={styles.bookHeading}>Pages: {book.pageCount} pages</Text>
+        <Text style={styles.bookHeading}>ISBN: {book.isbn}</Text>
       </View>
+      <Text style={styles.bookHeading}>Located:</Text>
       <View style={styles.select}>
         <TouchableOpacity style={styles.selector} onPress={() => null}>
-          <Text style={styles.buttonText}>add TBR</Text>
+          <Text style={styles.buttonText}>TBR</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.selector} onPress={() => null}>
-          <Text style={styles.buttonText}>add library</Text>
+          <Text style={styles.buttonText}>library</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.bookHeading}>Owned?</Text>
@@ -54,7 +80,7 @@ export default function BookScreen({ navigation }) {
           <Text style={styles.buttonText}>Add Book</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
@@ -101,6 +127,13 @@ const styles = StyleSheet.create({
   bookTitle: {
     fontSize: 28,
     fontWeight: "bold",
+    flexWrap: "wrap",
+    width: 200,
+  },
+  bookAuthor: {
+    fontSize: 20,
+    flexWrap: "wrap",
+    width: 200,
   },
   bookDetail: {
     paddingTop: 20,
@@ -110,10 +143,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     paddingHorizontal: 28,
+    paddingTop: 5,
   },
   select: {
-    paddingTop: 20,
-    paddingBottom: 20,
+    padding: 10,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

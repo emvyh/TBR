@@ -9,24 +9,30 @@ import BookScreen from "./screens/BookScreen";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("TBR");
+  const [screenParams, setScreenParams] = useState({});
+
+  const navigate = (screenName, params = {}) => {
+    console.log("Navigate called with:", screenName, params);
+    setCurrentScreen(screenName);
+    setScreenParams(params);
+  };
 
   let ScreenComponent;
   if (currentScreen === "TBR") {
-    ScreenComponent = <TBR />;
+    ScreenComponent = <TBR navigation={{ navigate }} />;
   } else if (currentScreen === "Library") {
-    ScreenComponent = <Library />;
+    ScreenComponent = <Library navigation={{ navigate }} />;
   } else if (currentScreen === "AddBook") {
-    ScreenComponent = <AddBook navigation={{ navigate: setCurrentScreen }} />;
+    ScreenComponent = <AddBook navigation={{ navigate }} />;
   } else if (currentScreen === "ByBarcode") {
-    ScreenComponent = <ByBarcode navigation={{ navigate: setCurrentScreen }} />;
+    ScreenComponent = <ByBarcode navigation={{ navigate }} />;
   } else if (currentScreen === "BySearch") {
-    ScreenComponent = <BySearch navigation={{ navigate: setCurrentScreen }} />;
+    ScreenComponent = <BySearch navigation={{ navigate }} />;
   } else if (currentScreen === "BookScreen") {
     ScreenComponent = (
-      <BookScreen navigation={{ navigate: setCurrentScreen }} />
+      <BookScreen navigation={{ navigate }} route={{ params: screenParams }} />
     );
   }
-
   return (
     <View style={styles.container}>
       <View style={styles.content}>{ScreenComponent}</View>
