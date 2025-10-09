@@ -1,0 +1,19 @@
+search name/author/title
+
+retrieve books that are similar or matching:
+show 4-5 at a time if scroll show more
+
+if isbn scanned open up the book screen of that book
+
+
+book object:
+isbn string
+author string
+year string
+title string
+pages number
+cover art png
+
+supbase 
+user 1 :
+title| author | pages | isbn | year | cover | inlibrary or tbr | owned or not owned
