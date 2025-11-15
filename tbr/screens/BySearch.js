@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { getbookData } from "../utils/bookFinder";
 import BookSearch from "../components/BookSearch";
 
@@ -26,65 +27,73 @@ export default function BySearch({ navigation }) {
     }
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.heading}>
-        <View style={styles.textWrapper}>
-          <Text style={styles.sectionTitle}>Search</Text>
+    <LinearGradient
+      colors={["#ffbe9e", "#fa918b", "#fe7582"]}
+      style={styles.container}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
+      <View style={styles.container}>
+        <View style={styles.heading}>
+          <View style={styles.textWrapper}>
+            <Text style={styles.sectionTitle}>Search</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.customButton}
+            onPress={() => navigation.navigate("AddBook")}
+          >
+            <Text style={styles.buttonText}>Back</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.customButton}
-          onPress={() => navigation.navigate("AddBook")}
-        >
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
-      </View>
 
-      <View>
-        <TextInput
-          style={styles.input}
-          onChangeText={setText}
-          value={text}
-          placeholder="Search for books..."
-          placeholderTextColor="#cc66a3"
-          onSubmitEditing={handleSearch}
-          returnKeyType="search"
-        />
-      </View>
-      <View style={styles.book}>
-        <BookSearch />
-      </View>
-      {books.length > 0 && (
-        <ScrollView style={styles.resultWrapper}>
-          <Text style={styles.resultHeading}>Found {books.length} books:</Text>
-          {books.map((book, index) => (
-            <BookSearch
-              key={index}
-              book={book}
-              navigation={navigation}
-              onPress={() => {
-                console.log("Book object being passed:", book);
-                console.log("Book keys:", Object.keys(book));
-                navigation.navigate("BookScreen", { book });
-              }}
-            />
-          ))}
-        </ScrollView>
-      )}
-      {books.length === 0 && text.trim() !== "" && (
-        <View style={styles.noResults}>
-          <Text style={styles.noResultsText}>
-            No books found. Try a different search term.
-          </Text>
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={setText}
+            value={text}
+            placeholder="Search for books..."
+            placeholderTextColor="#cc66a3"
+            onSubmitEditing={handleSearch}
+            returnKeyType="search"
+          />
         </View>
-      )}
-    </View>
+        <View style={styles.book}>
+          <BookSearch />
+        </View>
+        {books.length > 0 && (
+          <ScrollView style={styles.resultWrapper}>
+            <Text style={styles.resultHeading}>
+              Found {books.length} books:
+            </Text>
+            {books.map((book, index) => (
+              <BookSearch
+                key={index}
+                book={book}
+                navigation={navigation}
+                onPress={() => {
+                  console.log("Book object being passed:", book);
+                  console.log("Book keys:", Object.keys(book));
+                  navigation.navigate("BookScreen", { book });
+                }}
+              />
+            ))}
+          </ScrollView>
+        )}
+        {books.length === 0 && text.trim() !== "" && (
+          <View style={styles.noResults}>
+            <Text style={styles.noResultsText}>
+              No books found. Try a different search term.
+            </Text>
+          </View>
+        )}
+      </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffc2e8",
   },
   textWrapper: {
     paddingHorizontal: 20,

@@ -14,6 +14,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("TBR");
   const [screenParams, setScreenParams] = useState({});
+  const [selectedNav, setSelectedNav] = useState(null);
 
   let [fontsLoaded] = useFonts({
     "StackSansHeadline-Bold": require("./assets/fonts/StackSansHeadline-Bold.ttf"),
@@ -56,8 +57,23 @@ export default function App() {
           style={styles.navButton}
           onPress={() => setCurrentScreen("TBR")}
         >
-          <Feather style={styles.icon} name="bookmark" size={24} color="#fff" />
-          <CustomText semiBold style={styles.navText}>
+          <Feather
+            style={{
+              textAlign: "center",
+              paddingBottom: 5,
+              opacity: currentScreen === "TBR" ? 1 : 0.4,
+            }}
+            name="bookmark"
+            size={24}
+            color="#fff"
+          />
+          <CustomText
+            semiBold
+            style={[
+              styles.navText,
+              currentScreen != "TBR" && styles.navUnselectedText,
+            ]}
+          >
             TBR
           </CustomText>
         </TouchableOpacity>
@@ -67,12 +83,22 @@ export default function App() {
           onPress={() => setCurrentScreen("Library")}
         >
           <Feather
-            style={styles.icon}
+            style={{
+              textAlign: "center",
+              paddingBottom: 5,
+              opacity: currentScreen === "Library" ? 1 : 0.4,
+            }}
             name="book-open"
             size={24}
             color="#fff"
           />
-          <CustomText semiBold style={styles.navText}>
+          <CustomText
+            semiBold
+            style={[
+              styles.navText,
+              currentScreen != "Library" && styles.navUnselectedText,
+            ]}
+          >
             Library
           </CustomText>
         </TouchableOpacity>
@@ -82,12 +108,28 @@ export default function App() {
           onPress={() => setCurrentScreen("AddBook")}
         >
           <Ionicons
-            style={styles.icon}
+            style={{
+              textAlign: "center",
+              paddingBottom: 5,
+              opacity:
+                currentScreen !== "Library" && currentScreen !== "TBR"
+                  ? 1
+                  : 0.4,
+            }}
             name="add-circle-outline"
             size={24}
             color="#fff"
           />
-          <CustomText semiBold style={styles.navText}>
+          <CustomText
+            semiBold
+            style={[
+              styles.navUnselectedText,
+              currentScreen == "AddBook" && styles.navText,
+              currentScreen == "BookScreen" && styles.navText,
+              currentScreen == "BySearch" && styles.navText,
+              currentScreen == "ByBarcode" && styles.navText,
+            ]}
+          >
             Add
           </CustomText>
         </TouchableOpacity>
@@ -117,8 +159,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#fff",
   },
-  icon: {
-    textAlign: "center",
-    paddingBottom: 5,
+  navUnselectedText: {
+    color: "rgba(255, 255, 255, 0.3)",
+    fontSize: 20,
   },
 });
