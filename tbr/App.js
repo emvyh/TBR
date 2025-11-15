@@ -57,7 +57,9 @@ export default function App() {
           onPress={() => setCurrentScreen("TBR")}
         >
           <Feather style={styles.icon} name="bookmark" size={24} color="#fff" />
-          <CustomText style={styles.navText}>TBR</CustomText>
+          <CustomText semiBold style={styles.navText}>
+            TBR
+          </CustomText>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -70,7 +72,9 @@ export default function App() {
             size={24}
             color="#fff"
           />
-          <CustomText style={styles.navText}>Library</CustomText>
+          <CustomText semiBold style={styles.navText}>
+            Library
+          </CustomText>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -83,7 +87,9 @@ export default function App() {
             size={24}
             color="#fff"
           />
-          <CustomText style={styles.navText}>Add</CustomText>
+          <CustomText semiBold style={styles.navText}>
+            Add
+          </CustomText>
         </TouchableOpacity>
       </View>
     </View>
