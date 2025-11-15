@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useFonts } from "expo-font";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import TBR from "./screens/TBR";
 import Library from "./screens/Library";
@@ -8,6 +9,15 @@ import ByBarcode from "./screens/ByBarcode";
 import BookScreen from "./screens/BookScreen";
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    "StackSansHeadline-Bold": require("./assets/fonts/StackSansHeadline-Bold.ttf"),
+    "StackSansHeadline-Regular": require("./assets/fonts/StackSansHeadline-Regular.ttf"),
+    "StackSansHeadline-SemiBold": require("./assets/fonts/StackSansHeadline-SemiBold.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
   const [currentScreen, setCurrentScreen] = useState("TBR");
   const [screenParams, setScreenParams] = useState({});
 

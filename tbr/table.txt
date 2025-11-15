@@ -1,0 +1,11 @@
+book
+ISBN author title pages is_owned category[] location id
+
+category
+name 
+
+mylibrary
+book []
+
+my tbr
+book []
