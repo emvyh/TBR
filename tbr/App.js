@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { useFonts } from "expo-font";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import CustomText from "./CustomText";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import TBR from "./screens/TBR";
 import Library from "./screens/Library";
 import AddBook from "./screens/AddBook";
 import BySearch from "./screens/BySearch";
 import ByBarcode from "./screens/ByBarcode";
 import BookScreen from "./screens/BookScreen";
+import Feather from "@expo/vector-icons/Feather";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function App() {
+  const [currentScreen, setCurrentScreen] = useState("TBR");
+  const [screenParams, setScreenParams] = useState({});
+
   let [fontsLoaded] = useFonts({
     "StackSansHeadline-Bold": require("./assets/fonts/StackSansHeadline-Bold.ttf"),
     "StackSansHeadline-Regular": require("./assets/fonts/StackSansHeadline-Regular.ttf"),
@@ -18,8 +24,6 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  const [currentScreen, setCurrentScreen] = useState("TBR");
-  const [screenParams, setScreenParams] = useState({});
 
   const navigate = (screenName, params = {}) => {
     console.log("Navigate called with:", screenName, params);
@@ -52,21 +56,34 @@ export default function App() {
           style={styles.navButton}
           onPress={() => setCurrentScreen("TBR")}
         >
-          <Text style={styles.navText}>📚 TBR</Text>
+          <Feather style={styles.icon} name="bookmark" size={24} color="#fff" />
+          <CustomText style={styles.navText}>TBR</CustomText>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => setCurrentScreen("Library")}
         >
-          <Text style={styles.navText}>📖 Library</Text>
+          <Feather
+            style={styles.icon}
+            name="book-open"
+            size={24}
+            color="#fff"
+          />
+          <CustomText style={styles.navText}>Library</CustomText>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => setCurrentScreen("AddBook")}
         >
-          <Text style={styles.navText}>🧾 Add</Text>
+          <Ionicons
+            style={styles.icon}
+            name="add-circle-outline"
+            size={24}
+            color="#fff"
+          />
+          <CustomText style={styles.navText}>Add</CustomText>
         </TouchableOpacity>
       </View>
     </View>
@@ -83,15 +100,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     paddingVertical: 15,
-    backgroundColor: "#eee",
+    backgroundColor: "#fc6271ff",
     borderTopWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#ff828eff",
   },
   navButton: {
     padding: 10,
   },
   navText: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 20,
+    color: "#fff",
+  },
+  icon: {
+    textAlign: "center",
+    paddingBottom: 5,
   },
 });

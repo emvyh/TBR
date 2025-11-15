@@ -25,7 +25,9 @@ export default function TBR({ navigation }) {
       end={{ x: 1, y: 1 }}
     >
       <View style={styles.tbrWrapper}>
-        <CustomText style={styles.sectionTitle}>To Be Read</CustomText>
+        <CustomText bold style={styles.sectionTitle}>
+          To Be Read
+        </CustomText>
 
         <TextInput
           style={styles.searchBar}
@@ -48,7 +50,9 @@ export default function TBR({ navigation }) {
                 )
               }
             >
-              <CustomText style={styles.categoryText}>{category}</CustomText>
+              <CustomText semiBold style={styles.categoryText}>
+                {category}
+              </CustomText>
             </TouchableOpacity>
           ))}
         </View>
@@ -73,7 +77,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 28,
-    fontWeight: "bold",
     marginBottom: 20,
     color: "#ffffffff",
     textAlign: "center",
@@ -110,13 +113,12 @@ const styles = StyleSheet.create({
   categoryButtonSelected: {
     marginRight: 12,
     textAlign: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    backgroundColor: "rgba(252, 72, 117, 0.3)",
     paddingVertical: 8,
     paddingHorizontal: 15,
     borderRadius: 15,
   },
   categoryText: {
     color: "#f8e9e9ff",
-    fontWeight: "bold",
   },
 });
