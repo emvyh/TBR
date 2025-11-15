@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 28,
-    fontWeight: "bold",
     marginBottom: 20,
     color: "#ffffffff",
     textAlign: "center",
@@ -117,6 +116,5 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     color: "#f8e9e9ff",
-    fontWeight: "bold",
   },
 });
