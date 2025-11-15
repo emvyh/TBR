@@ -9,7 +9,7 @@ const Book = (props) => {
           source={{
             width: 100,
             height: 150,
-            uri: "https://picsum.photos/seed/picsum/200/300",
+            uri: "https://fastly.picsum.photos/id/797/200/300.jpg?hmac=9JRjR3IU9I3ol6cF0HvudMsYauIgNcElExNSrGOlwGM",
           }}
           style={styles.image}
         />

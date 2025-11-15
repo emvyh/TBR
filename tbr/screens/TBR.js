@@ -31,7 +31,7 @@ export default function TBR({ navigation }) {
 
         <TextInput
           style={styles.searchBar}
-          placeholder="Search in your library..."
+          placeholder="Search in your tbr..."
           onChangeText={setSearch}
           value={search}
           placeholderTextColor="#f8e9e9ff"
