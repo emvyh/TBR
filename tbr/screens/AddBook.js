@@ -51,7 +51,7 @@ export default function AddBook({ navigation }) {
                   year: "2025",
                   pageCount: 123,
                   isbn: "1234567890",
-                  pic: "https://via.placeholder.com/150x200?text=Temp+Book",
+                  pic: "https://via.placeholder.com/75x125?text=No+Image",
                 },
               })
             }

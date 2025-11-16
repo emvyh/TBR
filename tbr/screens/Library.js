@@ -35,6 +35,7 @@ export default function TBR({ navigation }) {
           onChangeText={setSearch}
           value={search}
           placeholderTextColor="#f8e9e9ff"
+          selectionColor="#fff"
         />
         <View style={styles.categories}>
           {categories.map((category) => (

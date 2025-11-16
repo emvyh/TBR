@@ -7,10 +7,15 @@ import {
   Image,
   ScrollView,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import CustomText from "../CustomText";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function BookScreen({ route, navigation }) {
   console.log("Route params:", route?.params);
   console.log("Book data:", route?.params?.book);
+  const [select, setSelect] = useState(null);
+  const [owned, setOwned] = useState(null);
   const { book } = route.params;
 
   if (!book) {
@@ -23,157 +28,198 @@ export default function BookScreen({ route, navigation }) {
   console.log("All book properties:", Object.keys(book));
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.heading}>
-        <View style={styles.textWrapper}>
-          <Text style={styles.sectionTitle}>Book Details</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.customButton}
-          onPress={() => navigation.navigate("AddBook")}
-        >
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
+    <LinearGradient
+      colors={["#ffbe9e", "#fa918b", "#fe7582"]}
+      style={styles.container}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
+      <View style={styles.bookScreenWrapper}>
+        <ScrollView style={styles.container}>
+          <TouchableOpacity onPress={() => navigation.navigate("AddBook")}>
+            <Ionicons name="arrow-back" size={32} color="#fff" />
+          </TouchableOpacity>
+          <View style={styles.bookHero}>
+            <Image
+              source={{
+                uri: book.pic || "https://picsum.photos/150/200",
+              }}
+              style={styles.bookImage}
+            />
+
+            <View style={styles.titleAuthor}>
+              <CustomText bold style={styles.bookTitle}>
+                {book.title}
+              </CustomText>
+              <CustomText style={styles.smallText}>
+                {" "}
+                By{" "}
+                {Array.isArray(book.author)
+                  ? book.author.join(", ")
+                  : book.author}
+              </CustomText>
+            </View>
+          </View>
+          <View style={styles.blockContainer}>
+            <View style={styles.block}>
+              <CustomText style={styles.smallText}> Publication</CustomText>
+              <CustomText style={styles.smallText}>{book.year}</CustomText>
+            </View>
+            <View style={styles.block}>
+              <CustomText style={styles.smallText}>Pages</CustomText>
+              <CustomText style={styles.smallText}>
+                {" "}
+                {book.pageCount}{" "}
+              </CustomText>
+            </View>
+            <View style={styles.block}>
+              <CustomText style={styles.smallText}>Publisher</CustomText>
+              <CustomText style={styles.smallText}> n/a </CustomText>
+            </View>
+          </View>
+
+          <CustomText style={styles.questions}>
+            Where would you like to add this book?
+          </CustomText>
+          <View style={styles.select}>
+            <TouchableOpacity
+              style={[
+                styles.selector,
+                select === "tbr" && styles.selectorSelected,
+              ]}
+              onPress={() => setSelect("tbr")}
+            >
+              <CustomText style={styles.buttonText}>TBR</CustomText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.selector,
+                select === "library" && styles.selectorSelected,
+              ]}
+              onPress={() => setSelect("library")}
+            >
+              <CustomText style={styles.buttonText}>Library</CustomText>
+            </TouchableOpacity>
+          </View>
+          <CustomText style={styles.questions}>Owned?</CustomText>
+          <View style={styles.select}>
+            <TouchableOpacity
+              style={[
+                styles.selector,
+                owned === "yes" && styles.selectorSelected,
+              ]}
+              onPress={() => setOwned("yes")}
+            >
+              <CustomText style={styles.buttonText}>Yes</CustomText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.selector,
+                owned === "no" && styles.selectorSelected,
+              ]}
+              onPress={() => setOwned("no")}
+            >
+              <CustomText style={styles.buttonText}>No</CustomText>
+            </TouchableOpacity>
+          </View>
+          <CustomText style={styles.questions}>
+            Where would you like to add this book?
+          </CustomText>
+          <TouchableOpacity style={styles.add} onPress={() => null}>
+            <CustomText style={styles.buttonText}>Add Book</CustomText>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
-      <View style={styles.title}>
-        <Image
-          source={{
-            width: 150,
-            height: 200,
-            uri: book.pic || "https://via.placeholder.com/75x125?text=No+Image",
-          }}
-        />
-        <View style={styles.bookInfo}>
-          <Text style={styles.bookTitle}>{book.title}</Text>
-          <Text style={styles.bookAuthor}>
-            {" "}
-            By:{" "}
-            {Array.isArray(book.author) ? book.author.join(", ") : book.author}
-          </Text>
-          <Text style={styles.bookAuthor}> Year: {book.year}</Text>
-        </View>
-      </View>
-      <View style={styles.bookDetail}>
-        <Text style={styles.bookHeading}>Pages: {book.pageCount} pages</Text>
-        <Text style={styles.bookHeading}>ISBN: {book.isbn}</Text>
-      </View>
-      <Text style={styles.bookHeading}>Located:</Text>
-      <View style={styles.select}>
-        <TouchableOpacity style={styles.selector} onPress={() => null}>
-          <Text style={styles.buttonText}>TBR</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.selector} onPress={() => null}>
-          <Text style={styles.buttonText}>library</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.bookHeading}>Owned?</Text>
-      <View style={styles.select}>
-        <TouchableOpacity style={styles.selector} onPress={() => null}>
-          <Text style={styles.buttonText}>Yes</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.selector} onPress={() => null}>
-          <Text style={styles.buttonText}>No</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.last}>
-        <TouchableOpacity style={styles.add} onPress={() => null}>
-          <Text style={styles.buttonText}>Add Book</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    </LinearGradient>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffc2e8",
   },
-  textWrapper: {
+  bookScreenWrapper: {
+    paddingTop: 40,
     paddingHorizontal: 20,
     flex: 1,
   },
-  sectionTitle: {
-    color: "black",
-    fontSize: 54,
-    fontWeight: "bold",
-  },
-  customButton: {
-    justifyContent: "center",
+  bookHero: {
+    flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#ff66c4",
-    paddingVertical: 14,
-    paddingHorizontal: 28,
-    borderRadius: 8,
-    minWidth: 80,
-    height: 48,
+    gap: 20,
+    marginTop: 20,
+    marginBottom: 20,
   },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
+  bookImage: {
+    width: 220,
+    height: 270,
+    backgroundColor: "#fff",
+    elevation: 8,
   },
-  heading: {
-    paddingTop: 50,
-    flexDirection: "row",
+  titleAuthor: {
     alignItems: "center",
-    paddingRight: 20,
-  },
-  title: {
-    flexDirection: "row",
-    paddingHorizontal: 28,
-    paddingTop: 20,
-    gap: 10,
   },
   bookTitle: {
     fontSize: 28,
-    fontWeight: "bold",
+    color: "#fff",
     flexWrap: "wrap",
-    width: 200,
   },
-  bookAuthor: {
-    fontSize: 20,
+  smallText: {
+    fontSize: 16,
+    color: "#fff",
     flexWrap: "wrap",
-    width: 200,
+    marginTop: 5,
+  },
+  blockContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 20,
+    paddingBottom: 10,
+  },
+  block: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    borderRadius: 10,
+    alignItems: "center",
   },
   bookDetail: {
     paddingTop: 20,
     gap: 20,
   },
-  bookHeading: {
-    fontSize: 24,
-    fontWeight: "bold",
-    paddingHorizontal: 28,
-    paddingTop: 5,
+  questions: {
+    fontSize: 16,
+    color: "#fff",
+    paddingTop: 10,
   },
   select: {
-    padding: 10,
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 20,
-    paddingHorizontal: 28,
+    gap: 10,
+    marginTop: 10,
   },
   selector: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ff66c4",
-    paddingVertical: 14,
-    borderRadius: 50,
-    minWidth: 180,
-    height: 48,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  selectorSelected: {
+    backgroundColor: "rgba(252, 72, 117, 0.3)",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
   },
   last: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 40,
+    marginTop: 30,
+    marginBottom: 40,
   },
   add: {
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "#ff66c4",
-    paddingVertical: 14,
-    borderRadius: 50,
-    minWidth: 150,
-    height: 48,
+    paddingVertical: 15,
+    borderRadius: 8,
+    alignItems: "center",
   },
 });

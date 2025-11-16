@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     borderRadius: 10,
-    elevation: 8, // Android shadow
-    backgroundColor: "#fff", // Needed for elevation to work
+    elevation: 8,
+    backgroundColor: "#fff",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,

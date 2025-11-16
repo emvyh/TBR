@@ -35,6 +35,7 @@ export default function TBR({ navigation }) {
           onChangeText={setSearch}
           value={search}
           placeholderTextColor="#f8e9e9ff"
+          selectionColor="#fff"
         />
         <View style={styles.categories}>
           {categories.map((category) => (
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   categories: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start", // hug the left side
+    justifyContent: "flex-start", 
     marginTop: 10,
   },
   categoryButton: {
