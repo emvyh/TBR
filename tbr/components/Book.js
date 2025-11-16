@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 8, // Android shadow
     backgroundColor: "#fff", // Needed for elevation to work
-    shadowColor: "#000", // iOS shadow
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,

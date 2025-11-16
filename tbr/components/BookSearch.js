@@ -1,12 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-
+import CustomText from "../CustomText";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 const BookSearch = ({ book, onPress }) => {
   if (!book) {
     return null;
   }
   return (
-    <TouchableOpacity style={styles.bookContainer} onPress={onPress}>
+    <View style={styles.bookContainer}>
       <View style={styles.item}>
         <Image
           source={{
@@ -14,43 +15,75 @@ const BookSearch = ({ book, onPress }) => {
             height: 125,
             uri: book.pic || "https://via.placeholder.com/75x125?text=No+Image",
           }}
+          style={styles.image}
         />
-        <View style={styles.textWrapper}>
-          <Text style={styles.text}>{book.title} </Text>
-          <Text style={styles.text}>
-            {Array.isArray(book.author) ? book.author.join(", ") : book.author}
-          </Text>
+
+        <View style={styles.bookCardandButton}>
+          <View style={styles.textWrapper}>
+            <CustomText semiBold style={styles.text}>
+              {book.title}
+            </CustomText>
+            <CustomText style={styles.text}>
+              {Array.isArray(book.author)
+                ? book.author.join(", ")
+                : book.author}
+            </CustomText>
+          </View>
+
+          <TouchableOpacity onPress={onPress} style={styles.addButton}>
+            <MaterialIcons name="add-circle" size={32} color="#fc6271ff" />
+          </TouchableOpacity>
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   bookContainer: {
-    backgroundColor: "#ffb3e6",
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
     marginVertical: 8,
-    marginHorizontal: 16,
     borderRadius: 12,
     padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   item: {
     flexDirection: "row",
+    alignItems: "center",
   },
   text: {
     paddingTop: 5,
-    fontSize: 20,
+    fontSize: 16,
     textAlign: "left",
     flexWrap: "wrap",
+    width: "80%",
+    color: "#f8e9e9ff",
   },
+  imageContainer: {
+    borderRadius: 10,
+    elevation: 8,
+    backgroundColor: "#fff",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+  },
+  bookCardandButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1,
+  },
+
   textWrapper: {
-    paddingHorizontal: 10,
+    flex: 1,
     flexDirection: "column",
+    justifyContent: "center",
+    marginLeft: 10,
+    flexShrink: 1,
+    maxWidth: "80%",
+  },
+
+  addButton: {
+    padding: 4,
   },
 });
 export default BookSearch;

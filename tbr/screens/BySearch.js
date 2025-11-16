@@ -11,6 +11,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { getbookData } from "../utils/bookFinder";
 import BookSearch from "../components/BookSearch";
+import CustomText from "../CustomText";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function BySearch({ navigation }) {
   const [text, setText] = React.useState("");
@@ -33,28 +35,26 @@ export default function BySearch({ navigation }) {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      <View style={styles.container}>
-        <View style={styles.heading}>
-          <View style={styles.textWrapper}>
-            <Text style={styles.sectionTitle}>Search</Text>
-          </View>
-          <TouchableOpacity
-            style={styles.customButton}
-            onPress={() => navigation.navigate("AddBook")}
-          >
-            <Text style={styles.buttonText}>Back</Text>
+      <View style={styles.searchWrapper}>
+        <View style={styles.titleBack}>
+          <TouchableOpacity onPress={() => navigation.navigate("AddBook")}>
+            <Ionicons name="arrow-back" size={32} color="#fff" />
           </TouchableOpacity>
+          <CustomText bold style={styles.sectionTitle}>
+            By Search
+          </CustomText>
         </View>
 
         <View>
           <TextInput
-            style={styles.input}
+            style={styles.searchBar}
             onChangeText={setText}
             value={text}
             placeholder="Search for books..."
-            placeholderTextColor="#cc66a3"
+            placeholderTextColor="#f8e9e9ff"
             onSubmitEditing={handleSearch}
             returnKeyType="search"
+            selectionColor="#fff"
           />
         </View>
         <View style={styles.book}>
@@ -62,9 +62,9 @@ export default function BySearch({ navigation }) {
         </View>
         {books.length > 0 && (
           <ScrollView style={styles.resultWrapper}>
-            <Text style={styles.resultHeading}>
+            <CustomText style={styles.resultHeading}>
               Found {books.length} books:
-            </Text>
+            </CustomText>
             {books.map((book, index) => (
               <BookSearch
                 key={index}
@@ -81,9 +81,9 @@ export default function BySearch({ navigation }) {
         )}
         {books.length === 0 && text.trim() !== "" && (
           <View style={styles.noResults}>
-            <Text style={styles.noResultsText}>
+            <CustomText style={styles.noResultsText}>
               No books found. Try a different search term.
-            </Text>
+            </CustomText>
           </View>
         )}
       </View>
@@ -95,49 +95,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  textWrapper: {
+  searchWrapper: {
+    paddingTop: 40,
     paddingHorizontal: 20,
-    flex: 1,
   },
-  heading: {
-    paddingTop: 50,
+  titleBack: {
     flexDirection: "row",
-    alignItems: "center",
-    paddingRight: 20,
+    justifyContent: "flex-start",
+    gap: 10,
   },
   sectionTitle: {
-    color: "black",
-    fontSize: 54,
-    fontWeight: "bold",
+    fontSize: 28,
+    marginBottom: 20,
+    color: "#ffffffff",
+    textAlign: "center",
   },
-  customButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ff66c4",
-    paddingVertical: 14,
-    paddingHorizontal: 28,
-    borderRadius: 8,
-    minWidth: 80,
-    height: 48,
-  },
-  buttonText: {
-    color: "white",
+  searchBar: {
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    padding: 15,
+    borderRadius: 15,
     fontSize: 16,
-    fontWeight: "600",
-  },
-  input: {
-    marginLeft: 5,
-    backgroundColor: "#ffb3e6",
-    borderRadius: 25,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    fontSize: 16,
-    color: "#333",
-    borderWidth: 2,
-    borderColor: "#ff99d6",
-    maxWidth: 400,
+    color: "#fff",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
   },
   book: {
     paddingTop: 20,
+  },
+  resultHeading: {
+    color: "#fff",
+  },
+  noResultsText: {
+    textAlign: "center",
+    paddingTop: 10,
+    color: "#fff",
+    fontSize: 16,
   },
 });
