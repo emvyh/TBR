@@ -10,12 +10,22 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import CustomText from "../CustomText";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Dropdown from "../components/Dropdown";
 
 export default function BookScreen({ route, navigation }) {
   console.log("Route params:", route?.params);
   console.log("Book data:", route?.params?.book);
   const [select, setSelect] = useState(null);
   const [owned, setOwned] = useState(null);
+  const [category, setCategory] = useState([]);
+  const categories = [
+    "ebook",
+    "physical",
+    "fantasy",
+    "romance",
+    "ya",
+    "self-help",
+  ];
   const { book } = route.params;
 
   if (!book) {
@@ -122,9 +132,13 @@ export default function BookScreen({ route, navigation }) {
               <CustomText style={styles.buttonText}>No</CustomText>
             </TouchableOpacity>
           </View>
-          <CustomText style={styles.questions}>
-            Where would you like to add this book?
-          </CustomText>
+          <CustomText style={styles.questions}>Add to a category?</CustomText>
+          <Dropdown
+            options={categories}
+            value={category}
+            onSelect={setCategory}
+            placeholder="Select a category..."
+          />
           <TouchableOpacity style={styles.add} onPress={() => null}>
             <CustomText style={styles.buttonText}>Add Book</CustomText>
           </TouchableOpacity>
@@ -221,5 +235,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",
+    marginTop: 50,
+    marginBottom: 100,
   },
 });
