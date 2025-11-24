@@ -1,5 +1,5 @@
 book
-ISBN author title pages is_owned category[] location id
+ISBN author title pages is_owned category[] location 
 
 category
 name 

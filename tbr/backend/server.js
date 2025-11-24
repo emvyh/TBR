@@ -1,23 +1,22 @@
 import express from "express";
-import pkg from "pg";
-const { Pool } = pkg;
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+import pool from "./database.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
-app.use(express.json());
 
+// test app
 app.get("/", (req, res) => {
-  res.json({ message: "hi" });
+  res.send("Hello, World!");
 });
 
-const PORT = process.env.PORT || 3000;
+//test if this works... it works :3
+app.get("/books", async (req, res) => {
+  const books = await pool.query("SELECT * FROM book;");
+  res.send({ books });
+});
 
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
