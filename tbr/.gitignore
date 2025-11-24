@@ -40,3 +40,6 @@ yarn-error.*
 *.tsbuildinfo
 
 .expo/
+
+# sql 
+tempScript.sql
