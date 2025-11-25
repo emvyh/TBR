@@ -1,6 +1,7 @@
 import express from "express";
 import pool from "./database.js";
 import dotenv from "dotenv";
+import { getAllBooks } from "./controllers/bookController.js";
 dotenv.config();
 
 const app = express();
@@ -10,13 +11,8 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-//test if this works... it works :3
-app.get("/books", async (req, res) => {
-  const books = await pool.query("SELECT * FROM book;");
-  res.send({ books });
-});
-
 // GET all books from TBR/Library
+app.get("/books", getAllBooks);
 app.get("/books/tbr", getAllBooksTbr);
 app.get("/books/library", getAllBooksLibrary);
 
@@ -26,6 +22,12 @@ app.post("/books/library", addNewBooktoLibrary);
 
 // PUT - Update book details
 app.put("/books/:isbn", updateExistingBook);
+
+// PUT - Update book location (TBR or Library)
+app.put("/books/:isbn/location", updateBookLocation);
+
+// PUT - Update book ownership status
+app.put("/books/:isbn/owned", updateBookOwnership);
 
 // DELETE - Remove from TBR/Library
 app.delete("/books/tbr/:isbn", removeFromTBR);
