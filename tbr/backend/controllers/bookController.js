@@ -1,4 +1,4 @@
-import pool from "database.js";
+import pool from "../database.js";
 
 // get functions
 
@@ -52,21 +52,88 @@ export const getAllBooksLibrary = async (req, res) => {
 //post functions
 
 export const addNewBooktoTbr = async (req, res) => {
+  const client = await pool.connect();
+  //required since we are doing more than 1 query
   try {
     const { isbn, author, title, pages, publisher, is_owned, user_id, images } =
       req.body;
 
-    if (!isbn) {
-      console.log("book needs isbn");
-      return res.status(400).json({ error: "isbn required" });
+    if (!isbn || !user_id) {
+      console.log("book needs isbn and user_id");
+      return res.status(400).json({ error: "isbn and user_id required" });
     }
+    // query start
+    await client.query("begin");
+
     await pool.query(
-      `insert into book (isbn, author, title, pages,publisher,is_owned, in_library, user_id, images) 
+      `insert into books (isbn, author, title, pages,publisher,is_owned, in_library, user_id, images) 
       values($1, $2, $3, $4, $5, $6, false, $7, $8)`,
       [isbn, author, title, pages, publisher, is_owned, user_id, images]
     );
+    await pool.query(
+      `insert into tbr_book (user_id, isbn)
+      values( $1, $2)`,
+      [user_id, isbn]
+    );
+    await client.query("commit");
+    // query end
 
     res.status(201).json({ message: "book added to tbr", title });
+    //added sucessfuly
+  } catch (error) {
+    await client.query("rollback"); // -> undos all queries called
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
+    //done with connection
+  }
+};
+
+export const addNewBooktoLibrary = async (req, res) => {
+  const client = await pool.connect();
+  //required since we are doing more than 1 query
+  try {
+    const { isbn, author, title, pages, publisher, is_owned, user_id, images } =
+      req.body;
+
+    if (!isbn || !user_id) {
+      console.log("book needs isbn and user_id");
+      return res.status(400).json({ error: "isbn and user_id required" });
+    }
+    // query start
+    await client.query("begin");
+
+    await pool.query(
+      `insert into books (isbn, author, title, pages,publisher,is_owned, in_library, user_id, images) 
+      values($1, $2, $3, $4, $5, $6, true, $7, $8)`,
+      [isbn, author, title, pages, publisher, is_owned, user_id, images]
+    );
+    await pool.query(
+      `insert into tbr_book (user_id, isbn)
+      values( $1, $2)`,
+      [user_id, isbn]
+    );
+    await client.query("commit");
+    // query end
+
+    res.status(201).json({ message: "book added to library", title });
+    //added sucessfuly
+  } catch (error) {
+    await client.query("rollback"); // -> undos all queries called
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
+    //done with connection
+  }
+};
+
+// put methods
+
+export const updateExistingBook = async (req, res) => {
+  const { isbn } = req.params;
+  try {
+    const { author, title, pages, publisher, is_owned, images } = req.body;
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
