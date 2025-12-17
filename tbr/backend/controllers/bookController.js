@@ -133,7 +133,10 @@ export const updateExistingBook = async (req, res) => {
   const { isbn } = req.params;
   try {
     const { author, title, pages, publisher, is_owned, images } = req.body;
+    if(author !== undefined) author.push
+    await pool.query(``, [author, title, pages, publisher, is_owned, images]);
 
+    res.status(201).json({ message: "book has been updated ", title });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
