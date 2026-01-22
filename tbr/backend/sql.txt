@@ -1,0 +1,19 @@
+how to run psql 
+
+command: 
+psql -h gondola.proxy.rlwy.net -U postgres -p 16303 -d railway
+pass: 
+JEnWBSpXTWovrvThnRlciqbcxXIRZABL
+
+how to see all tables
+\dt 
+
+how to test crud
+node server.js -> starts the server
+curl "http://localhost:3001/books?user_id=1" | jq -> testing get methods
+
+testing post methods example
+curl -X POST "http://localhost:3001/books" \
+  -H "Content-Type: application/json" \
+  -d '{"isbn":"9780143127741","author":"Donna Tartt","title":"The Goldfinch","pages":784,"publisher":"Little, Brown","is_owned":true,"user_id":123,"images":"https://example.com/cover.jpg"}' \
+  | jq
