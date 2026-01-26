@@ -8,6 +8,7 @@ import {
   updateExistingBook,
   addNewBooktoLibrary,
   addNewBooktoTbr,
+  deleteBook
 } from "./controllers/bookController.js";
 dotenv.config();
 
@@ -31,16 +32,9 @@ app.post("/books/library", addNewBooktoLibrary);
 // PUT - Update book details
 app.put("/books/:isbn", updateExistingBook);
 
-// // PUT - Update book location (TBR or Library)
-// app.put("/books/:isbn/location", updateBookLocation);
-
-// // PUT - Update book ownership status
-// app.put("/books/:isbn/owned", updateBookOwnership);
-// /*
-// the values after are params
 //  */
 // // DELETE - Remove from TBR/Library
-// app.delete("/books/tbr/:isbn", removeFromTBR);
+app.delete("/books/:isbn", deleteBook);
 // app.delete("/books/library/:isbn", removeFromLibrary);
 
 // //category section

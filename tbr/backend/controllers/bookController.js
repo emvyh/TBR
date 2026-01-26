@@ -1,6 +1,7 @@
 import pool from "../database.js";
 
 // get functions
+// all get functions tested and working
 
 export const getAllBooks = async (req, res) => {
   try {
@@ -132,12 +133,42 @@ export const addNewBooktoLibrary = async (req, res) => {
 export const updateExistingBook = async (req, res) => {
   const { isbn } = req.params;
   try {
-    const { author, title, pages, publisher, is_owned, images } = req.body;
-    if(author !== undefined) author.push
-    await pool.query(``, [author, title, pages, publisher, is_owned, images]);
+    //getting the data from the body
+    const { author, title, pages, publisher, is_owned} = req.body;
+    const result = await pool.query (
+      'update books set author = $1, title = $2, pages = $3, publisher = $4, is_owned = $5 where isbn = $6 returning *'
+      [author, title, pages, publisher, is_owned, isbn]
+      //get the changes and update them
+    );
+  if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Book not found" });
+    }
 
-    res.status(201).json({ message: "book has been updated ", title });
+    res.status(200).json({
+      message: "Book updated",
+      book: result.rows[0]
+    });
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
+// delete methods
+export const deleteBook = async (req, res) => {
+  const {isbn} = req.params;
+  const user_id = 1;
+  try {
+    //find book
+    if (!isbn) {
+       return res.status(400).json({ error: "isbn required" });
+    }
+    await pool.query (
+      'delete from books where isbn = $1 and user_id = $2', [isbn, user_id]
+    );
+    res.status(200).json({message: "book deleted"});
+  } catch (error) {
+    res.status(500).json({error: error.message});
+  }
+
+}
